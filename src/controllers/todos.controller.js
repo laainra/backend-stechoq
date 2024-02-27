@@ -7,7 +7,7 @@ const config = require("../config/auth.config.js");
 
 // Add new Todo
 exports.create = (req, res) => {
-  console.log("Request body:", req.body); 
+  console.log("Request body:", req.body);
 
   if (!req.body || !req.body.title) {
     res.status(400).send({
@@ -31,10 +31,8 @@ exports.create = (req, res) => {
     }
     console.log("Decoded JWT payload:", decoded);
 
-
     const userId = decoded.id;
-    
- 
+
     User.findOne({ where: { id: userId } })
       .then((user) => {
         if (!user) {
@@ -43,9 +41,9 @@ exports.create = (req, res) => {
 
         const todo = {
           title: req.body.title,
-          description: req.body.description || "", 
-          status: req.body.status || false, 
-          username: user.username, 
+          description: req.body.description || "",
+          status: req.body.status || false,
+          username: user.username,
         };
 
         Todo.create(todo)
@@ -69,17 +67,14 @@ exports.create = (req, res) => {
 
 // Show All Todos
 exports.findAll = (req, res) => {
-
   Todo.findAll()
     .then((data) => {
       if (data.length === 0) {
-
         res.status(404).send({
           message: "No todos found.",
         });
       } else {
- 
-        res.send({message:"yeyyy todos foundd",data:data});
+        res.send({ message: "yeyyy todos foundd", data: data });
       }
     })
     .catch((err) => {
@@ -96,7 +91,7 @@ exports.findOne = (req, res) => {
   Todo.findByPk(id)
     .then((data) => {
       if (data) {
-        res.send({message:"Yeyy todo found",data:data});
+        res.send({ message: "Yeyy todo found", data: data });
       } else {
         res.status(404).send({
           message: `Cannot find todo with id=${id}.`,
@@ -121,7 +116,7 @@ exports.update = (req, res) => {
       if (data == 1) {
         res.send({
           message: "todo was updated successfully.",
-          data:data
+          data: data,
         });
       } else {
         res.send({
@@ -161,10 +156,9 @@ exports.delete = (req, res) => {
     });
 };
 
-
 // Show List todo based on username
 exports.findTodobyUser = (req, res) => {
-  const username = req.body.username; 
+  const username = req.body.username;
 
   User.findOne({ where: { username: username } })
     .then((user) => {
@@ -198,7 +192,6 @@ exports.findTodobyUser = (req, res) => {
     });
 };
 
-
 // Delete aLL
 exports.deleteAll = (req, res) => {
   Todo.destroy({
@@ -215,15 +208,3 @@ exports.deleteAll = (req, res) => {
     });
 };
 
-// 
-exports.findAllStatus = (req, res) => {
-  Todo.findAll({ where: { status: true } })
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message || "Some error occurred while retrieving todos.",
-      });
-    });
-};

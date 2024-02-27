@@ -8,7 +8,6 @@ const db = require("./src/models");
 const todoRoutes = require("./src/routes/todo.routes");
 const authRoutes = require("./src/routes/auth.routes");
 
-
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -41,11 +40,11 @@ const Role = db.role;
 function initial() {
   Role.findOrCreate({
     where: { id: 1 },
-    defaults: { name: "user" }
+    defaults: { name: "user" },
   });
 
   Role.findOrCreate({
     where: { id: 2 },
-    defaults: { name: "admin" }
+    defaults: { name: "admin" },
   });
 }

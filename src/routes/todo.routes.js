@@ -8,7 +8,6 @@ module.exports = app => {
 
     router.post("/", authJwt.verifyToken, todos.create);
     router.get("/", authJwt.verifyToken, todos.findAll);
-    router.get("/status", authJwt.verifyToken, todos.findAllStatus);
     router.get("/:id", authJwt.verifyToken, todos.findOne);
     router.post("/find", authJwt.verifyToken, todos.findTodobyUser);
     router.put("/:id", authJwt.verifyToken, todos.update);

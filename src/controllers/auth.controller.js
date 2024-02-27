@@ -7,9 +7,8 @@ const Op = db.Sequelize.Op;
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 
-// Sign Up  
+// Sign Up
 exports.signup = (req, res) => {
-
   User.create({
     username: req.body.username,
     name: req.body.name,
@@ -70,7 +69,6 @@ exports.signin = (req, res) => {
           id: user.id,
           username: user.username,
           name: user.name,
-          roles: authorities,
           accessToken: token,
         });
       });
